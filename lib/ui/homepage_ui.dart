@@ -1,7 +1,14 @@
+import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:agenda_hari_ini/services/notification_service.dart';
 import 'package:agenda_hari_ini/services/theme_service.dart';
+import 'package:agenda_hari_ini/theme/theme.dart';
+import 'package:agenda_hari_ini/ui/addTask_ui.dart';
+import 'package:agenda_hari_ini/widget/buttomW.dart';
+import 'package:agenda_hari_ini/widget/taskbarW.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class homepageUi extends StatefulWidget {
   const homepageUi({super.key});
@@ -20,14 +27,31 @@ class _homepageUiState extends State<homepageUi> {
     notifC.initializeNotification();
   }
 
-  final temaC = Get.put(ThemeService());
+  final datepickS = Get.put(datepicker());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
       body: Column(
         children: [
-          Row(),
+          const TaskbarW(),
+          Container(
+            margin: const EdgeInsets.only(left: 20, top: 20),
+            child: DatePicker(
+              DateTime.now(),
+              height: Get.height * 0.1,
+              width: Get.width * 0.18,
+              initialSelectedDate: DateTime.now(),
+              selectionColor: primaryClr,
+              selectedTextColor: Colors.white,
+              locale: "id_ID",
+              dateTextStyle: tanggalPickerStyle,
+              dayTextStyle: hariPickerStyle,
+              onDateChange: (selectedDate) {
+                datepickS.selectdate = selectedDate;
+              },
+            ),
+          ),
         ],
       ),
     );

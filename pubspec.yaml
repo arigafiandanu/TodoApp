@@ -30,12 +30,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  date_picker_timeline: ^1.2.3
   flutter:
     sdk: flutter
   flutter_local_notifications: ^11.0.0
   flutter_native_timezone: ^2.0.0
   get: ^4.6.5
   get_storage: ^2.0.3
+  google_fonts: ^3.0.1
   intl: ^0.17.0
 
 dev_dependencies:
