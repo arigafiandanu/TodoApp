@@ -27,7 +27,7 @@ class _homepageUiState extends State<homepageUi> {
     notifC.initializeNotification();
   }
 
-  final datepickS = Get.put(datepicker());
+  final datepickS = Get.put(DatePickerService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +48,7 @@ class _homepageUiState extends State<homepageUi> {
               dateTextStyle: tanggalPickerStyle,
               dayTextStyle: hariPickerStyle,
               onDateChange: (selectedDate) {
-                datepickS.selectdate = selectedDate;
+                datepickS.selectdate.value = selectedDate;
               },
             ),
           ),

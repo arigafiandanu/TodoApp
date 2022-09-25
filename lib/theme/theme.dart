@@ -39,7 +39,7 @@ TextStyle get headingStyle {
     textStyle: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
-      color: Get.isDarkMode ? Colors.white : Colors.black,
+      color: Get.isDarkMode ? Colors.white : Colors.grey,
     ),
   );
 }
@@ -60,6 +60,26 @@ TextStyle get hariPickerStyle {
       fontSize: 14,
       fontWeight: FontWeight.bold,
       color: Colors.black,
+    ),
+  );
+}
+
+TextStyle get titleStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w700,
+      color: Get.isDarkMode ? Colors.white : Colors.black,
+    ),
+  );
+}
+
+TextStyle get subTitleStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w300,
+      color: Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
     ),
   );
 }
