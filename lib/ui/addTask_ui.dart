@@ -114,6 +114,32 @@ class _AddTaskUiState extends State<AddTaskUi> {
                   )
                 ],
               ),
+              Obx(
+                () => TextFormW(
+                  title: "Inggatkan Saya",
+                  hint: "${datepickS.ingkatkanSaya.value} Menit sebelumnya",
+                  controller: null,
+                  widget: DropdownButton(
+                    icon: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                    ),
+                    iconSize: 35,
+                    elevation: 4,
+                    underline: Container(
+                      height: 0,
+                    ),
+                    items: datepickS.listIngatkanSaya.map((e) {
+                      return DropdownMenuItem(
+                        value: e.toString(),
+                        child: Text(e.toString()),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      datepickS.ingkatkanSaya.value = int.parse(newValue!);
+                    },
+                  ),
+                ),
+              )
             ],
           ),
         ),

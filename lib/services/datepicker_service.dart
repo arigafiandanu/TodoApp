@@ -11,6 +11,9 @@ class DatePickerService extends GetxController {
   var selectTimeNow = DateFormat("hh:mm a").format(DateTime.now()).toString();
   var selectTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
 
+  RxInt ingkatkanSaya = 5.obs;
+  List<int> listIngatkanSaya = [5, 10, 15, 30, 60];
+
   void getdatepicker() async {
     DateTime? pickdate = await showDatePicker(
       context: Get.context!,
