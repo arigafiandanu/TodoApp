@@ -31,6 +31,7 @@ class _homepageUiState extends State<homepageUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(),
       body: Column(
         children: [

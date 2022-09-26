@@ -1,6 +1,7 @@
 import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:agenda_hari_ini/theme/theme.dart';
+import 'package:agenda_hari_ini/widget/buttomW.dart';
 import 'package:agenda_hari_ini/widget/datePickerW.dart';
 import 'package:agenda_hari_ini/widget/textFormW.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -89,7 +90,10 @@ class _AddTaskUiState extends State<AddTaskUi> {
                           onPressed: () {
                             datepickS.getTimePicker(true);
                           },
-                          icon: const Icon(Icons.access_time_rounded),
+                          icon: const Icon(
+                            Icons.access_time_rounded,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
@@ -107,7 +111,10 @@ class _AddTaskUiState extends State<AddTaskUi> {
                           onPressed: () {
                             datepickS.getTimePicker(false);
                           },
-                          icon: const Icon(Icons.share_arrival_time_rounded),
+                          icon: const Icon(
+                            Icons.share_arrival_time_rounded,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     ),
@@ -139,7 +146,92 @@ class _AddTaskUiState extends State<AddTaskUi> {
                     },
                   ),
                 ),
-              )
+              ),
+              Obx(
+                () => TextFormW(
+                  title: "Inggatkan Saya Kembali",
+                  hint: datepickS.ingkatkanKegiatan.value,
+                  controller: null,
+                  widget: DropdownButton(
+                    icon: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                    ),
+                    iconSize: 35,
+                    elevation: 4,
+                    underline: Container(
+                      height: 0,
+                    ),
+                    items: datepickS.listIngatkanKegiatan.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Text(e),
+                      );
+                    }).toList(),
+                    onChanged: (String? kegiatan) {
+                      datepickS.ingkatkanKegiatan.value = kegiatan!;
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Colors",
+                        style: titleStyle,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Obx(
+                        () => Wrap(
+                          children: List.generate(
+                            3,
+                            (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  datepickS.selectColor.value = index;
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: CircleAvatar(
+                                    radius: 14,
+                                    backgroundColor: index == 0
+                                        ? blueClr
+                                        : index == 1
+                                            ? amberClr
+                                            : RedClr,
+                                    child: datepickS.selectColor.value == index
+                                        ? const Icon(
+                                            Icons.done_rounded,
+                                            color: Colors.white,
+                                            size: 16,
+                                          )
+                                        : Container(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Tombol(
+                    label: "Tambah Kegiatan",
+                    ontap: () {
+                      addTaskSer.validasiData();
+                    },
+                  )
+                ],
+              ),
             ],
           ),
         ),

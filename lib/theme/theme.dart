@@ -9,6 +9,9 @@ const Color primaryClr = bluesC;
 const MaterialColor terang = Colors.green;
 const Color darkGreyClr = Color(0xff121212);
 Color darkheaderClr = Color(0xff424242);
+Color blueClr = Colors.blue.shade900;
+Color amberClr = Colors.amber.shade900;
+Color RedClr = Colors.red.shade900;
 
 class Customtema {
   static final terang = ThemeData(
@@ -36,10 +39,10 @@ TextStyle get subHeadingStyle {
 
 TextStyle get headingStyle {
   return GoogleFonts.lato(
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
-      color: Get.isDarkMode ? Colors.white : Colors.grey,
+      // color: Get.isDarkMode ? Colors.white : Colors.grey,
     ),
   );
 }
@@ -66,10 +69,10 @@ TextStyle get hariPickerStyle {
 
 TextStyle get titleStyle {
   return GoogleFonts.lato(
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w700,
-      color: Get.isDarkMode ? Colors.white : Colors.black,
+      // color: Get.isDarkMode ? Colors.white : Colors.black,
     ),
   );
 }
@@ -79,7 +82,7 @@ TextStyle get subTitleStyle {
     textStyle: TextStyle(
       fontSize: 15,
       fontWeight: FontWeight.w300,
-      color: Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
+      color: Get.isDarkMode ? Colors.black : Colors.grey[700],
     ),
   );
 }

@@ -1,4 +1,3 @@
-import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +12,11 @@ class DatePickerService extends GetxController {
 
   RxInt ingkatkanSaya = 5.obs;
   List<int> listIngatkanSaya = [5, 10, 15, 30, 60];
+
+  RxString ingkatkanKegiatan = "Tidak".obs;
+  List<String> listIngatkanKegiatan = ["Tidak", "Setiap Hari", "Setiap Minggu"];
+
+  RxInt selectColor = 0.obs;
 
   void getdatepicker() async {
     DateTime? pickdate = await showDatePicker(
@@ -38,13 +42,13 @@ class DatePickerService extends GetxController {
         minute: int.parse(startTime.value.split(":")[1].split(" ")[0]),
       ),
     );
-    String formattime = pickTime!.format(Get.context!);
+    String? formattime = pickTime?.format(Get.context!);
     if (pickTime == null) {
       print("batal");
     } else if (isStartTime == true) {
-      startTime.value = formattime;
+      startTime.value = formattime!;
     } else if (isStartTime == false) {
-      endTime.value = formattime;
+      endTime.value = formattime!;
     }
   }
 }

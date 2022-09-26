@@ -29,13 +29,14 @@ class TextFormW extends StatelessWidget {
           Container(
             height: Get.height * 0.05,
             margin: const EdgeInsets.only(top: 8),
-            padding: const EdgeInsets.only(left: 15),
+            padding: const EdgeInsets.only(left: 15, bottom: 5),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
                 width: 1,
               ),
               borderRadius: BorderRadius.circular(12),
+              color: Colors.green[50],
             ),
             child: Row(
               children: [
@@ -44,13 +45,14 @@ class TextFormW extends StatelessWidget {
                     autofocus: true,
                     readOnly: widget == null ? false : true,
                     cursorColor:
-                        Get.isDarkMode ? Colors.grey[100] : Colors.grey[700],
+                        Get.isDarkMode ? Colors.grey[100] : Colors.grey[800],
                     controller: controller,
                     style: subTitleStyle,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: hint,
                       hintStyle: subTitleStyle,
+                      focusColor: Colors.white,
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: context.theme.backgroundColor,
