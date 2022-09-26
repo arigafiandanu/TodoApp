@@ -1,18 +1,47 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class DatePickerService extends GetxController {
-  var selectdate = DateTime.now().obs;
+  Rx<DateTime> selectdate = DateTime.now().obs;
+  RxString endTime = "09.00 pm".obs;
+  RxString startTime = DateFormat("hh:mm a").format(DateTime.now()).obs;
 
   var selectTimeNow = DateFormat("hh:mm a").format(DateTime.now()).toString();
   var selectTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
 
-  // void dapatTanggal() {
-  //   showDatePicker(
-  //     context: context,
-  //     initialDate: selectdate,
-  //     firstDate: DateTime(2021),
-  //     lastDate: DateTime(2040),
-  //   );
-  // }
+  void getdatepicker() async {
+    DateTime? pickdate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2040),
+      helpText: "Masukkan Tanggal Acara Berlangsung",
+    );
+    if (pickdate != null && pickdate != selectdate.value) {
+      selectdate.value = pickdate;
+    } else {
+      print("batal");
+    }
+  }
+
+  void getTimePicker(bool isStartTime) async {
+    var pickTime = await showTimePicker(
+      helpText: "Waktu Kegiatan",
+      context: Get.context!,
+      initialTime: TimeOfDay(
+        hour: int.parse(startTime.value.split(":")[0]),
+        minute: int.parse(startTime.value.split(":")[1].split(" ")[0]),
+      ),
+    );
+    String formattime = pickTime!.format(Get.context!);
+    if (pickTime == null) {
+      print("batal");
+    } else if (isStartTime == true) {
+      startTime.value = formattime;
+    } else if (isStartTime == false) {
+      endTime.value = formattime;
+    }
+  }
 }

@@ -1,19 +1,26 @@
 import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:agenda_hari_ini/theme/theme.dart';
+import 'package:agenda_hari_ini/widget/datePickerW.dart';
 import 'package:agenda_hari_ini/widget/textFormW.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class AddTaskUi extends StatelessWidget {
+class AddTaskUi extends StatefulWidget {
   const AddTaskUi({super.key});
 
+  @override
+  State<AddTaskUi> createState() => _AddTaskUiState();
+}
+
+class _AddTaskUiState extends State<AddTaskUi> {
   @override
   Widget build(BuildContext context) {
     final addTaskSer = Get.put(AddTaskService());
     final datepickS = Get.put(DatePickerService());
+
     return Scaffold(
       backgroundColor: context.theme.backgroundColor,
       appBar: AppBar(
@@ -67,48 +74,41 @@ class AddTaskUi extends StatelessWidget {
                   title: "Tanggal",
                   hint: DateFormat.yMd().format(datepickS.selectdate.value),
                   controller: null,
-                  widget: IconButton(
-                    onPressed: () {
-                      showDatePicker(
-                        context: context,
-                        initialDate: datepickS.selectdate.value,
-                        firstDate: DateTime(2018),
-                        lastDate: DateTime(2040),
-                      ).then((value) {
-                        datepickS.selectdate.value = value!;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.calendar_month_rounded,
-                      color: Colors.grey,
-                    ),
-                  ),
+                  widget: const DatePickerW(),
                 ),
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: TextFormW(
-                      title: "Mulai",
-                      hint: datepickS.selectTimeNow,
-                      controller: null,
-                      widget: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.access_time_rounded),
+                  Obx(
+                    () => Expanded(
+                      child: TextFormW(
+                        title: "Mulai",
+                        hint: datepickS.startTime.value,
+                        controller: null,
+                        widget: IconButton(
+                          onPressed: () {
+                            datepickS.getTimePicker(true);
+                          },
+                          icon: const Icon(Icons.access_time_rounded),
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                    child: TextFormW(
-                      title: "Selesai",
-                      hint: "20.00",
-                      controller: null,
-                      widget: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.share_arrival_time_rounded),
+                  Obx(
+                    () => Expanded(
+                      child: TextFormW(
+                        title: "Selesai",
+                        hint: datepickS.endTime.value,
+                        controller: null,
+                        widget: IconButton(
+                          onPressed: () {
+                            datepickS.getTimePicker(false);
+                          },
+                          icon: const Icon(Icons.share_arrival_time_rounded),
+                        ),
                       ),
                     ),
                   )
