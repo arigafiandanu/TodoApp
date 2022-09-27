@@ -1,5 +1,8 @@
+import 'package:agenda_hari_ini/model/taskModel.dart';
+import 'package:agenda_hari_ini/ui/notifpage_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get/get.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -9,7 +12,8 @@ class NotifyHelper {
       FlutterLocalNotificationsPlugin(); //
 
   void initializeNotification() async {
-    tz.initializeTimeZones();
+    // tz.initializeTimeZones();
+    _configureLocalTimeZone();
     final AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("appicon");
 
@@ -21,8 +25,10 @@ class NotifyHelper {
         DarwinInitializationSettings(
             onDidReceiveLocalNotification: onDidReceiveLocalNotification);
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: selectNotification);
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: selectNotification,
+    );
   }
 
   void onDidReceiveLocalNotification(
@@ -47,6 +53,15 @@ class NotifyHelper {
     );
   }
 
+  Future bukanotif(String payload) async {
+    if (payload != null) {
+      print('notification payload: $payload');
+    } else {
+      print("Notification Done");
+    }
+    Get.to(() => NotifPage());
+  }
+
   displayNotification({required String title, required String body}) async {
     print("doing test");
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
@@ -68,12 +83,14 @@ class NotifyHelper {
     );
   }
 
-  scheduledNotification() async {
+  scheduledNotification(int hour, int minute, TaskModel taskModel) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      'scheduled title',
-      'theme changes 5 seconds ago',
-      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+      taskModel.id!.toInt(),
+      taskModel.title,
+      taskModel.note,
+      // _convertTime
+      // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+      _convertTime(hour, minute),
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'your channel id',
@@ -84,7 +101,26 @@ class NotifyHelper {
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      // payload: 'default_sound'
+      matchDateTimeComponents: DateTimeComponents.time,
+      payload: "${taskModel.title}" + "${taskModel.note}|",
     );
+  }
+
+  tz.TZDateTime _convertTime(int hour, int minute) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime sceduleDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+
+    if (sceduleDate.isBefore(now)) {
+      sceduleDate = sceduleDate.add(const Duration(days: 1));
+    }
+
+    return sceduleDate;
+  }
+
+  Future<void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZone));
   }
 }

@@ -48,6 +48,15 @@ class DBHelper {
   }
 
   static delete(TaskModel? taskModel) async {
-    return await _db!.delete(tableName, where: 'id=?', whereArgs: [taskModel!.id]);
+    return await _db!
+        .delete(tableName, where: 'id=?', whereArgs: [taskModel!.id]);
+  }
+
+  static update(int id) async {
+    return await _db!.rawUpdate('''
+    UPDATE tasks 
+    SET isCompleted = ?
+    Where id = ?
+  ''', [1, id]);
   }
 }

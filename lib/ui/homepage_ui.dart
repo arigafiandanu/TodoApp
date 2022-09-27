@@ -1,4 +1,5 @@
 import 'package:agenda_hari_ini/controller/addTaskController.dart';
+import 'package:agenda_hari_ini/model/taskModel.dart';
 import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:agenda_hari_ini/services/notification_service.dart';
@@ -54,7 +55,9 @@ class _homepageUiState extends State<homepageUi> {
               dateTextStyle: tanggalPickerStyle,
               dayTextStyle: hariPickerStyle,
               onDateChange: (selectedDate) {
-                addTaskSer.selectdate.value = selectedDate;
+                setState(() {
+                  addTaskSer.selectdate.value = selectedDate;
+                });
               },
             ),
           ),
@@ -68,23 +71,56 @@ class _homepageUiState extends State<homepageUi> {
                 itemBuilder: (_, index) {
                   var data = addTaskSer.taskList.length;
                   print("data ada $data");
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    child: SlideAnimation(
-                      child: FadeInAnimation(
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _bottomsheetTask(index);
-                              },
-                              child: TaskTileW(addTaskSer.taskList[index]),
-                            ),
-                          ],
+
+                  TaskModel taskModel = addTaskSer.taskList[index];
+                  print(taskModel.toJson());
+                  if (taskModel.repeat == 'Setiap Hari') {
+                    notifC.scheduledNotification(
+                      int.parse(taskModel.startTime.toString().split(":")[0]),
+                      int.parse(taskModel.endTime.toString().split(":")[1]),
+                      taskModel,
+                    );
+
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      child: SlideAnimation(
+                        child: FadeInAnimation(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  _bottomsheetTask(index);
+                                },
+                                child: TaskTileW(taskModel),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
+                    );
+                  }
+                  if (taskModel.date ==
+                      DateFormat.yMd().format(addTaskSer.selectdate.value)) {
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      child: SlideAnimation(
+                        child: FadeInAnimation(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  _bottomsheetTask(index);
+                                },
+                                child: TaskTileW(taskModel),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
             ),
@@ -118,7 +154,11 @@ class _homepageUiState extends State<homepageUi> {
             addTaskSer.taskList[index].isCompleted == 1
                 ? Container()
                 : BottomSheetButton(
-                    ontap: () {},
+                    ontap: () {
+                      addTaskSer
+                          .markTaskCompleted(addTaskSer.taskList[index].id!);
+                      Get.back();
+                    },
                     label: "Selesai",
                     color: blueClr,
                   ),
@@ -126,20 +166,23 @@ class _homepageUiState extends State<homepageUi> {
               height: 10,
             ),
             BottomSheetButton(
-              ontap: () {},
+              ontap: () {
+                addTaskSer.delete(addTaskSer.taskList[index]);
+                Get.back();
+              },
               label: "Hapus",
               color: RedClr,
             ),
             const SizedBox(
               height: 40,
             ),
-            BottomSheetButton(
-              ontap: () {
-                Get.back();
-              },
-              label: "tutup",
-              color: Colors.grey.shade900,
-            )
+            // BottomSheetButton(
+            //   ontap: () {
+            //     Get.back();
+            //   },
+            //   label: "tutup",
+            //   color: Colors.grey.shade900,
+            // )
           ],
         ),
       ),

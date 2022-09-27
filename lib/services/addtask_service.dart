@@ -119,6 +119,12 @@ class AddTaskService extends GetxController {
 
   void delete(TaskModel? taskModel) {
     var val = DBHelper.delete(taskModel);
+    getTask();
     print(val);
+  }
+
+  void markTaskCompleted(int id) async {
+    await DBHelper.update(id);
+    getTask();
   }
 }
