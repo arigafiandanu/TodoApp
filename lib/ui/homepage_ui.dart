@@ -1,3 +1,4 @@
+import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:agenda_hari_ini/services/notification_service.dart';
 import 'package:agenda_hari_ini/services/theme_service.dart';
@@ -27,7 +28,7 @@ class _homepageUiState extends State<homepageUi> {
     notifC.initializeNotification();
   }
 
-  final datepickS = Get.put(DatePickerService());
+  final addTaskSer = Get.put(AddTaskService());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +50,7 @@ class _homepageUiState extends State<homepageUi> {
               dateTextStyle: tanggalPickerStyle,
               dayTextStyle: hariPickerStyle,
               onDateChange: (selectedDate) {
-                datepickS.selectdate.value = selectedDate;
+                addTaskSer.selectdate.value = selectedDate;
               },
             ),
           ),

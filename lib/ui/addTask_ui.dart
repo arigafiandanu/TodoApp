@@ -73,7 +73,7 @@ class _AddTaskUiState extends State<AddTaskUi> {
               Obx(
                 () => TextFormW(
                   title: "Tanggal",
-                  hint: DateFormat.yMd().format(datepickS.selectdate.value),
+                  hint: DateFormat.yMd().format(addTaskSer.selectdate.value),
                   controller: null,
                   widget: const DatePickerW(),
                 ),
@@ -84,11 +84,11 @@ class _AddTaskUiState extends State<AddTaskUi> {
                     () => Expanded(
                       child: TextFormW(
                         title: "Mulai",
-                        hint: datepickS.startTime.value,
+                        hint: addTaskSer.startTime.value,
                         controller: null,
                         widget: IconButton(
                           onPressed: () {
-                            datepickS.getTimePicker(true);
+                            addTaskSer.getTimePicker(true);
                           },
                           icon: const Icon(
                             Icons.access_time_rounded,
@@ -105,11 +105,11 @@ class _AddTaskUiState extends State<AddTaskUi> {
                     () => Expanded(
                       child: TextFormW(
                         title: "Selesai",
-                        hint: datepickS.endTime.value,
+                        hint: addTaskSer.endTime.value,
                         controller: null,
                         widget: IconButton(
                           onPressed: () {
-                            datepickS.getTimePicker(false);
+                            addTaskSer.getTimePicker(false);
                           },
                           icon: const Icon(
                             Icons.share_arrival_time_rounded,
@@ -124,7 +124,7 @@ class _AddTaskUiState extends State<AddTaskUi> {
               Obx(
                 () => TextFormW(
                   title: "Inggatkan Saya",
-                  hint: "${datepickS.ingkatkanSaya.value} Menit sebelumnya",
+                  hint: "${addTaskSer.ingkatkanSaya.value} Menit sebelumnya",
                   controller: null,
                   widget: DropdownButton(
                     icon: Icon(
@@ -135,14 +135,14 @@ class _AddTaskUiState extends State<AddTaskUi> {
                     underline: Container(
                       height: 0,
                     ),
-                    items: datepickS.listIngatkanSaya.map((e) {
+                    items: addTaskSer.listIngatkanSaya.map((e) {
                       return DropdownMenuItem(
                         value: e.toString(),
                         child: Text(e.toString()),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
-                      datepickS.ingkatkanSaya.value = int.parse(newValue!);
+                      addTaskSer.ingkatkanSaya.value = int.parse(newValue!);
                     },
                   ),
                 ),
@@ -150,7 +150,7 @@ class _AddTaskUiState extends State<AddTaskUi> {
               Obx(
                 () => TextFormW(
                   title: "Inggatkan Saya Kembali",
-                  hint: datepickS.ingkatkanKegiatan.value,
+                  hint: addTaskSer.ingkatkanKegiatan.value,
                   controller: null,
                   widget: DropdownButton(
                     icon: Icon(
@@ -161,14 +161,14 @@ class _AddTaskUiState extends State<AddTaskUi> {
                     underline: Container(
                       height: 0,
                     ),
-                    items: datepickS.listIngatkanKegiatan.map((e) {
+                    items: addTaskSer.listIngatkanKegiatan.map((e) {
                       return DropdownMenuItem(
                         value: e,
                         child: Text(e),
                       );
                     }).toList(),
                     onChanged: (String? kegiatan) {
-                      datepickS.ingkatkanKegiatan.value = kegiatan!;
+                      addTaskSer.ingkatkanKegiatan.value = kegiatan!;
                     },
                   ),
                 ),
@@ -197,7 +197,7 @@ class _AddTaskUiState extends State<AddTaskUi> {
                             (index) {
                               return GestureDetector(
                                 onTap: () {
-                                  datepickS.selectColor.value = index;
+                                  addTaskSer.selectColor.value = index;
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 10),
@@ -208,7 +208,7 @@ class _AddTaskUiState extends State<AddTaskUi> {
                                         : index == 1
                                             ? amberClr
                                             : RedClr,
-                                    child: datepickS.selectColor.value == index
+                                    child: addTaskSer.selectColor.value == index
                                         ? const Icon(
                                             Icons.done_rounded,
                                             color: Colors.white,

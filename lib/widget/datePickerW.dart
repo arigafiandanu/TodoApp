@@ -1,3 +1,4 @@
+import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ class DatePickerW extends StatefulWidget {
 }
 
 class _DatePickerWState extends State<DatePickerW> {
-  final dateService = Get.put(DatePickerService());
+  final dateService = Get.put(AddTaskService());
   @override
   Widget build(BuildContext context) {
     return IconButton(
