@@ -1,15 +1,19 @@
-import 'dart:ffi';
-
 import 'package:agenda_hari_ini/controller/addTaskController.dart';
 import 'package:agenda_hari_ini/database/db_helper.dart';
 import 'package:agenda_hari_ini/model/taskModel.dart';
 import 'package:agenda_hari_ini/theme/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddTaskService extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getTask();
+  }
+
   TextEditingController judulC = TextEditingController();
   TextEditingController noteC = TextEditingController();
   var task = Get.put(AddTaskController());
@@ -28,6 +32,8 @@ class AddTaskService extends GetxController {
   List<String> listIngatkanKegiatan = ["Tidak", "Setiap Hari", "Setiap Minggu"];
 
   RxInt selectColor = 0.obs;
+
+  var taskList = <TaskModel>[].obs;
 
   void validasiData() {
     if (judulC.text.isNotEmpty && noteC.text.isNotEmpty) {
@@ -103,5 +109,16 @@ class AddTaskService extends GetxController {
 
   Future<int> addTask(TaskModel? taskModel) async {
     return await DBHelper.insert(taskModel);
+  }
+
+  void getTask() async {
+    print("menggambil data");
+    List<Map<String, dynamic>> tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => TaskModel.fromJson(data)).toList());
+  }
+
+  void delete(TaskModel? taskModel) {
+    var val = DBHelper.delete(taskModel);
+    print(val);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/theme/theme.dart';
 import 'package:agenda_hari_ini/ui/addTask_ui.dart';
 import 'package:agenda_hari_ini/widget/buttomW.dart';
@@ -10,6 +11,7 @@ class TaskbarW extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final addtaskSer = Get.put(AddTaskService());
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Row(
@@ -30,9 +32,9 @@ class TaskbarW extends StatelessWidget {
           ),
           Tombol(
             label: " + Tambah Acara",
-            ontap: () {
-              print("pindah");
-              Get.to(() => AddTaskUi());
+            ontap: () async {
+              await Get.to(() => AddTaskUi());
+              addtaskSer.getTask();
             },
           )
         ],

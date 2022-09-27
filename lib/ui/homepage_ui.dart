@@ -1,13 +1,17 @@
+import 'package:agenda_hari_ini/controller/addTaskController.dart';
 import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
 import 'package:agenda_hari_ini/services/notification_service.dart';
 import 'package:agenda_hari_ini/services/theme_service.dart';
 import 'package:agenda_hari_ini/theme/theme.dart';
 import 'package:agenda_hari_ini/ui/addTask_ui.dart';
+import 'package:agenda_hari_ini/widget/bottomSheetButton.dart';
 import 'package:agenda_hari_ini/widget/buttomW.dart';
+import 'package:agenda_hari_ini/widget/taskTileW.dart';
 import 'package:agenda_hari_ini/widget/taskbarW.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -28,7 +32,7 @@ class _homepageUiState extends State<homepageUi> {
     notifC.initializeNotification();
   }
 
-  final addTaskSer = Get.put(AddTaskService());
+  final addTaskSer = Get.put(AddTaskService(), permanent: true);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +58,90 @@ class _homepageUiState extends State<homepageUi> {
               },
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Obx(
+              () => ListView.builder(
+                itemCount: addTaskSer.taskList.length,
+                itemBuilder: (_, index) {
+                  var data = addTaskSer.taskList.length;
+                  print("data ada $data");
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _bottomsheetTask(index);
+                              },
+                              child: TaskTileW(addTaskSer.taskList[index]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Future<dynamic> _bottomsheetTask(int index) {
+    return Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top: 5),
+        height: addTaskSer.taskList[index].isCompleted == 1
+            ? Get.height * 0.24
+            : Get.height * 0.32,
+        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 6,
+              width: Get.width * 0.4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            addTaskSer.taskList[index].isCompleted == 1
+                ? Container()
+                : BottomSheetButton(
+                    ontap: () {},
+                    label: "Selesai",
+                    color: blueClr,
+                  ),
+            const SizedBox(
+              height: 10,
+            ),
+            BottomSheetButton(
+              ontap: () {},
+              label: "Hapus",
+              color: RedClr,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            BottomSheetButton(
+              ontap: () {
+                Get.back();
+              },
+              label: "tutup",
+              color: Colors.grey.shade900,
+            )
+          ],
+        ),
       ),
     );
   }

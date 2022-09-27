@@ -86,3 +86,43 @@ TextStyle get subTitleStyle {
     ),
   );
 }
+
+TextStyle get titleKegiatan {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: Colors.grey[100],
+    ),
+  );
+}
+
+TextStyle get timeStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.w500,
+      color: Colors.grey[100],
+    ),
+  );
+}
+
+TextStyle get noteStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w700,
+      color: Colors.grey[100],
+    ),
+  );
+}
+
+TextStyle get rotatedSyle {
+  return GoogleFonts.lato(
+    textStyle: const TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+  );
+}
