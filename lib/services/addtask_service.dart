@@ -1,4 +1,3 @@
-import 'package:agenda_hari_ini/controller/addTaskController.dart';
 import 'package:agenda_hari_ini/database/db_helper.dart';
 import 'package:agenda_hari_ini/model/taskModel.dart';
 import 'package:agenda_hari_ini/theme/theme.dart';
@@ -16,10 +15,9 @@ class AddTaskService extends GetxController {
 
   TextEditingController judulC = TextEditingController();
   TextEditingController noteC = TextEditingController();
-  var task = Get.put(AddTaskController());
 
   Rx<DateTime> selectdate = DateTime.now().obs;
-  RxString endTime = "09.00 pm".obs;
+  RxString endTime = DateFormat("hh:mm a").format(DateTime.now()).obs;
   RxString startTime = DateFormat("hh:mm a").format(DateTime.now()).obs;
 
   var selectTimeNow = DateFormat("hh:mm a").format(DateTime.now()).toString();

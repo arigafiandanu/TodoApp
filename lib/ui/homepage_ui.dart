@@ -1,4 +1,3 @@
-import 'package:agenda_hari_ini/controller/addTaskController.dart';
 import 'package:agenda_hari_ini/model/taskModel.dart';
 import 'package:agenda_hari_ini/services/addtask_service.dart';
 import 'package:agenda_hari_ini/services/datepicker_service.dart';
@@ -51,6 +50,7 @@ class _homepageUiState extends State<homepageUi> {
               initialSelectedDate: DateTime.now(),
               selectionColor: primaryClr,
               selectedTextColor: Colors.white,
+              monthTextStyle: hariStyle,
               locale: "id_ID",
               dateTextStyle: tanggalPickerStyle,
               dayTextStyle: hariPickerStyle,
@@ -210,6 +210,11 @@ class _homepageUiState extends State<homepageUi> {
           color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ),
+      title: Text(
+        "Kegiatanku",
+        style: judulStyle,
+      ),
+      centerTitle: true,
       actions: [
         Icon(
           Icons.person,

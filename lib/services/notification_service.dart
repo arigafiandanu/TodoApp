@@ -1,4 +1,5 @@
 import 'package:agenda_hari_ini/model/taskModel.dart';
+import 'package:agenda_hari_ini/ui/homepage_ui.dart';
 import 'package:agenda_hari_ini/ui/notifpage_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -47,9 +48,7 @@ class NotifyHelper {
     //   print("Notification Done");
     // }
     Get.to(
-      () => Container(
-        color: Colors.amber,
-      ),
+      () => homepageUi(),
     );
   }
 
@@ -102,7 +101,8 @@ class NotifyHelper {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
-      payload: "${taskModel.title}" + "${taskModel.note}|",
+
+      // payload: "${taskModel.title}" + "${taskModel.note}|",
     );
   }
 

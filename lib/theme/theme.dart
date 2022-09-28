@@ -32,7 +32,7 @@ TextStyle get subHeadingStyle {
     textStyle: TextStyle(
       fontSize: 25,
       fontWeight: FontWeight.w400,
-      // color: Get.isDarkMode ? Colors.grey[400] : Colors.grey,
+      color: Get.isDarkMode ? Colors.grey[400] : Colors.grey,
     ),
   );
 }
@@ -62,7 +62,7 @@ TextStyle get hariPickerStyle {
     textStyle: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold,
-      color: Colors.black,
+      color: Get.isDarkMode ? Colors.white : Colors.black,
     ),
   );
 }
@@ -123,6 +123,26 @@ TextStyle get rotatedSyle {
       fontSize: 10,
       fontWeight: FontWeight.bold,
       color: Colors.white,
+    ),
+  );
+}
+
+TextStyle get judulStyle {
+  return GoogleFonts.lobster(
+    textStyle: TextStyle(
+      fontSize: 25,
+      fontWeight: FontWeight.bold,
+      color: Get.isDarkMode ? Colors.white : Colors.black,
+    ),
+  );
+}
+
+TextStyle get hariStyle {
+  return GoogleFonts.lato(
+    textStyle: TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w700,
+      color: Get.isDarkMode ? Colors.white : Colors.black,
     ),
   );
 }
